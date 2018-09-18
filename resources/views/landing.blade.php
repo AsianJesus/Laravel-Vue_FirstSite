@@ -12,15 +12,15 @@
         <tr>
             <td>
                 @forelse($users as $user)
-                    <user-form name="{{$user->name}}"
-                               id="{{$user->id}}"
+                    <user-form name="{{$user['name']}}"
+                               id="{{$user['id']}}"
                                link="users"
                                subscribe_url="/subscribe"
                                unsubscribe_url="/unsubscribe"
-                               @if(Auth::id() != $user->id)
+                               @if(Auth::id() != $user['id'])
                                @auth
                                subscribed = "{{
-                               isset($subs) && in_array(['id'=>$user->id],$subs) ? 'true' : 'false' }}"
+                               isset($subs) && in_array(['id'=>$user['id']],$subs) ? 'true' : 'false' }}"
                                @endauth
 
                                @if($admin)
@@ -61,7 +61,7 @@
                                      author_url = "/users/{{$article['uid']}}"
                                      title="{{$article['title']}}"
                                      full_article_url="/article/{{$article['id']}}"
-                                     @if(Auth::user()->type != 0 || Auth::id() == $article['uid'])
+                                     @if(Auth::user() != 0 || Auth::id() == $article['uid']))
                                      editable="true"
                                      edit_url="/edit/{{$article['id']}}"
                                     @endif
@@ -80,10 +80,12 @@
                                          author_url = "/users/{{$article['uid']}}"
                                          title="{{$article['title']}}"
                                          full_article_url="/article/{{$article['id']}}"
+                                         @auth
                                          @if(Auth::user()->type != 0 || Auth::id() == $article['uid'])
                                          editable="true"
                                          edit_url="/edit/{{$article['id']}}"
                                             @endif
+                                @endauth
                         >
                             {{substr($article['text'],0,300).'..'}}
                         </article-preview>

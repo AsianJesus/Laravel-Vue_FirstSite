@@ -13,7 +13,9 @@ use App\Comment;
 class Landing extends Controller
 {
     public function index(Request $request){
-        $users = User::all()->take(20);
+        $users = User::where([])
+        		->select('users.id','users.name','users.type')
+        		->get()->toArray();
         if(Auth::check()){
             $my_articles = Article::where(['uid'=>Auth::id()])
                 ->get()->toArray();
