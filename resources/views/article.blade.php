@@ -27,6 +27,7 @@
                     Edit
                 </button>
             </a>
+
         @endif
         @endauth
         <div>

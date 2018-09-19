@@ -33,9 +33,19 @@
     <ol>
         <h3>Followers</h3>
         @forelse($subs as $sub)
-            <li>
+            <ul>
+                <user-form name=""
+                           link="/users/{{$sub['id']}}"
+                           subscribe_url="/subscribe/{{$sub['id']}}"
+                           unsubscribe_url="/unsubscribe/{{$sub['id']}}"
+                           subscribed = {{ in_array($sub,$follows) ? "true" : 'false' }}
+                           @if(Auth::user()->type != 0)
+                           deletable = "true"
+                           delete_url="users/delete"
+                        @endif
+                ></user-form>
                 <a href="/users/{{$sub['id']}}">{{$sub['name']}}</a>
-            </li>
+            </ul>
         @empty
             <h4>Sorry, you don't have any follower</h4>
         @endforelse
@@ -43,20 +53,32 @@
     <ol>
         <h3>Subscriptions</h3>
         @forelse($follows as $sub)
-            <li>
+            <ul>
+                <user-form name=""
+                           link="users/{{$sub['id']}}"
+                           subscribe_url="/subscribe/{{$sub['id']}}"
+                           unsubscribe_url="/unsubscribe/{{$sub['id']}}"
+                           subscribed = "true"
+                           @if(Auth::user()->type != 0)
+                           deletable = "true"
+                           delete_url="users/delete"
+                            @endif
+                ></user-form>
                 <a href="/users/{{$sub['id']}}">{{$sub['name']}}</a>
-            </li>
+            </ul>
         @empty
             <h4>You don't have any</h4>
         @endforelse
     </ol>
-    <a href="/articles/new"><button> Create new article</button></a>)
+    <a href="/articles/new"><button> Create new article</button></a>
     <h3>Your recent articles</h3>
     @forelse($articles as $article)
         <article-preview title="{{$article['title']}}"
                          full_article_url="/article/{{$article['id']}}"
                          editable="true"
                          edit_url="/edit/{{$article['id']}}"
+                         deletable="true"
+                         delete_url="/delete/{{$article['id']}}"
         >
             {{substr($article['text'],0,300).'..'}}
         </article-preview>

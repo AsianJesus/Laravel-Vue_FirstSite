@@ -13,10 +13,16 @@
             <td>
                 @forelse($users as $user)
                     <user-form name="{{$user['name']}}"
+<<<<<<< HEAD
+                               link="/users/{{$user['id']}}"
+                               subscribe_url="/subscribe/{{$user['id']}}"
+                               unsubscribe_url="/unsubscribe/{{$user['id']}}"
+=======
                                id="{{$user['id']}}"
                                link="users"
                                subscribe_url="/subscribe"
                                unsubscribe_url="/unsubscribe"
+>>>>>>> 4fdd5ae33a99efff60fdc6a19dc29f12b4d6bb88
                                @if(Auth::id() != $user['id'])
                                @auth
                                subscribed = "{{
@@ -84,6 +90,8 @@
                                          @if(Auth::user()->type != 0 || Auth::id() == $article['uid'])
                                          editable="true"
                                          edit_url="/edit/{{$article['id']}}"
+                                         deletable="true"
+                                         delete_url="/delete/{{$article['id']}}"
                                             @endif
                                 @endauth
                         >

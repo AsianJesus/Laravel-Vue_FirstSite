@@ -13,6 +13,7 @@
 
 Route::get('/', "Landing@index");
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/users/all','UserController@all');
 Route::get('/users/{id}','UserController@show');
 Route::get('/myprofile','UserController@myprofile')->middleware('auth')->name('myprofile');
 Route::post('/subscribe/{id}','SubscribeController@subscribe')->middleware('auth');
@@ -29,5 +30,5 @@ Route::post('/comment/add','CommentController@add');
 Route::delete('/comment/delete/{id}',"CommentController@delete");
 Route::get('/edit/{id}',"ArticlesController@showEdit")->middleware('auth');
 Route::post('/edit/{id}','ArticlesController@edit')->middleware('auth');
-
+Route::delete('/delete/{id}','ArticlesController@delete')->middleware('auth');
 Auth::routes();

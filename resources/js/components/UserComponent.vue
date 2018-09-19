@@ -2,7 +2,7 @@
     <div class="user" v-if="enabled">
         <ol class="user-item" >
             <li class="user-item">
-                <a :href="link+'/'+id.toString()">
+                <a :href="link">
                     {{name}} <span v-if="likes">( {{likes}} likes)</span>
                 </a>
             </li>
@@ -27,9 +27,6 @@
         props: {
             name: {
                 default: ""
-            },
-            id: {
-                default: null
             },
             link: {
                 default: ""
@@ -64,7 +61,7 @@
             deleteUser : function(){
                 if(this.is_updating) return;
                 this.is_updating = true;
-                var url = this.delete_url+'/'+this.id.toString()
+                var url = this.delete_url
                 console.log('Sending request to ' + url)
                 axios.delete(url).then((response)=>{
                    console.log(response)
@@ -80,7 +77,7 @@
             subscribe : function(){
                 if(this.is_updating) return;
                 this.is_updating = true;
-                var url = this.subscribe_url+'/'+this.id.toString()
+                var url = this.subscribe_url
                 console.log('Sending request to ' + url)
                 axios.post(url).then((response)=>{
                     console.log(response)
@@ -96,7 +93,7 @@
             unsubscribe : function(){
                 if(this.is_updating) return;
                 this.is_updating = true;
-                var url = this.unsubscribe_url+'/'+this.id.toString()
+                var url = this.unsubscribe_url
                 console.log('Sending request to ' + url)
                 axios.post(url).then((response)=>{
                     console.log(response)

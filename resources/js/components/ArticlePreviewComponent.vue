@@ -3,15 +3,18 @@
         <a :href="full_article_url" >
         <h2 class="article-preview-title">
             {{ title }}
-            <span v-if="editable == 'true'">
-                <a :href="edit_url">
+        </h2>
+        </a>
+        <span>
+                <a :href="edit_url" v-if="editable=='true'">
                     <button>
                         Edit
                     </button>
                 </a>
-            </span>
-        </h2>
-        </a>
+                <button v-if="deletable == 'true'" @click="del">
+                    Delete
+                </button>
+        </span>
         <h3>
             <a :href="author_url">
             {{ author }}
@@ -43,6 +46,12 @@
             },
             editable: {
                 default: ""
+            },
+            deletable:{
+                default: ''
+            },
+            delete_url:{
+                default: "#"
             }
         },
         data:function(){
@@ -56,6 +65,26 @@
             },
             hide: function(){
                 this.show = false;
+            },
+            del: function(event){
+                if(!confirm('Delete article?')){
+                    event.preventDefault();
+                    return;
+                }
+                else{
+                    axios.delete(this.delete_url).then
+                    ((response)=> {
+                        alert("Successfully deleted article")
+                        window.location.reload()
+                    }).catch((response)=>{
+                        alert("Couldn't delete the article")
+                        console.log(err)
+                        }
+
+                    )
+
+                }
+
             }
         }
     }
