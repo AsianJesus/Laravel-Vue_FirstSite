@@ -23,7 +23,13 @@ class ArticlesController extends Controller
         return redirect('/article/'.(string)$article->id);
     }
     public function delete($id){
-
+        if(Auth::user()->type || Auth::id() == $id){
+            $article = Article::find($id);
+            $article->delete();
+            return Response('Article is deleted');
+        }else {
+            return Response('User is not allowed', 403);
+        }
     }
     public function show($id){
         $article = Article::find($id);

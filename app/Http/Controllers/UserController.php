@@ -36,13 +36,17 @@ class UserController extends Controller
             ->where('like_type','1')
             ->count();
         $role = $user->type == 1 ? 'Admin' : 'User';
+        $subscribed = Subscription::where(['subscription_id'=>$id,'follower_id'=>Auth::id()])->count() != 0;
         return view('user_page',
             ["exists"=>isset($user),
                 "name"=>$user->name,
                 'articles'=>$articles,
                 'likes'=>$likes,
                 'subs'=>$subs,
-                'role'=>$role]);
+                'role'=>$role,
+                'id' => $id,
+                'subscribed' =>$subscribed
+                ]);
     }
     public function myprofile(Request $request){
         $id = Auth::id();
@@ -70,5 +74,9 @@ class UserController extends Controller
             'follows'=>$following
         );
         return view('myprofile',$data);
+    }
+    public function all(Request $request){
+        $users = User::all();
+        return view('users_all',['users'=>$users]);
     }
 }
